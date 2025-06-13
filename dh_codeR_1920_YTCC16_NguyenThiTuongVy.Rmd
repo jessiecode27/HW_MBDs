@@ -16,11 +16,11 @@ knitr::opts_chunk$set(echo = TRUE,warning = FALSE, message = FALSE)
 #read the datafile, packages
 ```{r}
 library(readxl)
-datacuoi <- read_excel("Desktop/mattron/thesis/phhân tích/tổng /datacuoi.xlx")
+datacuoi <- read_excel("...")
 
 hcm<-datacuoi
 
-dh_data_1920_YTCC_NguyenThiTuongVy <- read_excel("~/Desktop/Vyy/personal/mattron/thesis/nộp/dh_data_1920_YTCC_NguyenThiTuongVy.xlsx")
+dh_data_1920_YTCC_NguyenThiTuongVy <- read_excel("...")
 hcm<-dh_data_1920_YTCC_NguyenThiTuongVy
 hcm$date <- as.Date(as.factor(hcm$yyyymmdd),format="%Y%m%d")
 hcm$dow<-weekdays(hcm$date)
@@ -160,7 +160,7 @@ sd(hcm$d_icd2529,na.rm = TRUE)
 hos.data<-hcm
 ```
 
-Figure 1. Histograms, scatter plots and Correlation coefficients  betweens weather conditions and hospitalization in hcm, Vietnam, 2017-2019
+Figure 1. Histograms, scatter plots, and Correlation coefficients  between weather conditions and hospitalization in HCM, Vietnam, 2017-2019
 ```{r}
 require("psych")
 pairs.panels(hcm[,c("all","meantemp","mintemp","maxtemp","rhum")])
@@ -201,7 +201,7 @@ dev.off()
 
 ############################################################
 ## DLNM modeling3###########################################
-Fit the DLNM model with priori parametters
+Fit the DLNM model with a priori parameters
 ```{r}
 # GLM WITH KNOTS SPECIFIED A PRIORI (GASPARRINI BMCmrm 2014)
 hcm$Temp<-hcm$meantemp
@@ -243,7 +243,7 @@ predglm1$allRRlow
 ```
 hos.data<- hcm
 
-# Hospitalizarion Coefs and SD (1oC above MMT==26)
+# Hospitalization Coefs and SD (1oC above MMT==26)
 ```{r}
 hospital1<-matrix(NA,nrow=15,ncol=3)
 colnames(hospital1)<-c("RR","RRhigh","RRlow")
@@ -432,7 +432,7 @@ plot(crlag4, var=27, col=2, ylab="RR", main="Full and reduced estimates")
 lines(crlag,col=3,lty=2,lwd=2)
 ```
 
-**plot the overall cummulative cure between main model and alternative models**
+**Plot the overall cumulative cure between the main model and the alternative models**
 ```{r}
 par(mar=c(5,4,1,1)+0.1,cex.axis=0.9,mgp=c(2.5,1,0))
 #layout(matrix(1:2,ncol=2))
@@ -454,7 +454,7 @@ dev.off()
 plot(crall3,var="26.2",xlab="Lag (days)",ylab="RR",lwd=1.5,
      main="lag-specific association at temperature=27oC")
 ```
-**compate Q-AIC between main model and alternative models**
+**Compare Q-AIC between main model and alternative models**
 ```{r}
 # Q-AIC FUNCTION
 fqaic <- function(model) {
@@ -473,7 +473,7 @@ fqaic(mfirst5)
 ```
 
 **Sensitivity modeling checking 2**
-  **Change the df of time-trend and seasonality controling**
+  **Change the df of time-trend and seasonality controlling**
 ```{r}
 # MAIN MODEL
 # - PREDICTOR SPACE: QUADRATIC SPLINE WITH SPECIFIC KNOT SELECTION
@@ -509,7 +509,7 @@ crall3 <- crossreduce(cb,mfirst3)
 crall4 <- crossreduce(cb,mfirst4)
 ```
 
-**plot the overall cummulative cure between main model and alternative models**
+**plot the overall cumulative curve between the main model and the alternative models**
 ```{r}
 par(mar=c(5,4,1,1)+0.1,cex.axis=0.9,mgp=c(2.5,1,0))
 #layout(matrix(1:2,ncol=2))
@@ -527,7 +527,7 @@ legend ("top",c("seasonality df=7/year","seasonality df=2/year",
         cex=0.8,title="Function for the seasonality control:")
 ```
 
-**compate Q-AIC between main model and alternative models**
+**Compare Q-AIC between main model and alternative models**
 ```{r}
 # Q-AIC FUNCTION
 fqaic <- function(model) {
@@ -547,14 +547,14 @@ fqaic(mfirst4)
 
 
 ## Heatwave analysis
-load packages, functions and create matrix for storing results
+load packages, functions, and createa matrix for storing results
 ```{r}
 # LOAD PACKAGES AND FUNCTIONS
 library(dlnm) ; library(splines) ; library(mgcv);require(MASS);require(lmtest)
 require(Epi);require(tsModel)
 require(metafor);require(foreign)
 
-# FUNCTION TO CREATE AN HEAT WAVE INDICATOR FOR A TEMPERATURE SERIES
+# FUNCTION TO CREATE A HEAT WAVE INDICATOR FOR A TEMPERATURE SERIES
 # 	BASED ON THE THRESHOLD AND THE DURATION, BY GROUPS
 fun.hw.thr <- function(x,thr,dur,group=NULL) {
   as.numeric(apply(Lag(x>=thr,0:(dur-1),group=group),
